@@ -1,0 +1,66 @@
+version: "3"
+services:
+  chain-jar01-service:
+    # 指定容器名称
+    container_name: chain-jar01
+    # 重启机制
+    # restart: always
+    image: openjdk:8
+    volumes:
+      # 本地jar包路径
+      - /home/chain-jar01.jar:/chain-jar01.jar
+      # 配置文件路径
+      - /home/ServerInfo01.properties:/src/main/java/com/mhly/tao/properties/ServerInfo.properties
+      # 挂载日志 -v A:B ,A指宿主机位置，B指容器位置
+      # - ./logs:/logs
+      # 指定容器时间为宿主机时间
+      - /etc/localtime:/etc/localtime
+      - ./logs:/app/logs
+    # 访问端口
+    ports:
+      - "50061:50061"
+    environment:
+      # 指定时区
+      - TZ="Asia/Shanghai"
+    # 启动容器后执行的命令
+    entrypoint: java -jar chain-jar01.jar
+    # 指定IP地址
+    # networks:
+    #     chainnet:
+    #        ipv4_address: 172.27.0.2
+
+
+  # chain-jar02-service:
+  #   # 指定容器名称
+  #   container_name: chain-jar02
+  #   # 重启机制
+  #   # restart: always
+  #   image: openjdk:11
+  #   volumes:
+  #     # 本地jar包路径
+  #     - /home/hlt/jarDeploy/chain-jar01/chain-jar01.jar:/chain-jar01.jar
+  #     # 配置文件路径
+  #     - /home/hlt/jarDeploy/chain-jar01/ServerInfo02.properties:/src/main/java/com/mhly/tao/properties/ServerInfo.properties
+  #     # 挂载日志 -v A:B ,A指宿主机位置，B指容器位置
+  #     # - ./logs:/logs
+  #     # 指定容器时间为宿主机时间
+  #     - /etc/localtime:/etc/localtime
+  #   # 访问端口
+  #   ports:
+  #     - "50062:50062"
+  #   environment:
+  #     # 指定时区
+  #     - TZ="Asia/Shanghai"
+  #   # 启动容器后执行的命令
+  #   entrypoint: java -jar chain-jar01.jar
+    # # 指定IP地址
+    # networks:
+    #     chainnet:
+    #        ipv4_address: 172.27.0.3
+
+# networks:
+#    chainnet:
+#       ipam:
+#          config:
+#          - subnet: 172.27.0.0/16
+#            #gateway: 172.27.0.1

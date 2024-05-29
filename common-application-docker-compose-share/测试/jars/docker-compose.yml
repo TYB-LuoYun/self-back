@@ -1,0 +1,29 @@
+version: '3'
+services:
+  pay:
+    image: openjdk:8 # 使用适用于 Java 11 的 Docker 镜像
+    container_name: ryu-pay
+    volumes:
+      - ./ryu-pay.jar:/app/pay.jar # 挂载 pay.jar 到容器的 /app 目录
+      - ./application.yml:/app/application.yml # 挂载外部配置文件到容器的 /app 目录
+      - ./logs:/app/logs
+    command: java -jar /app/pay.jar --spring.config.location=/app/application.yml
+    ports:
+      - "3394:3394" # 映射容器的 8080 端口到宿主机的 8081 端口
+    networks:
+      - mynetwork
+
+  # blog:
+  #   image: openjdk:11-jre-slim # 使用适用于 Java 11 的 Docker 镜像
+  #   container_name: blog-service
+  #   volumes:
+  #     - ./blog.jar:/app/blog.jar # 挂载 blog.jar 到容器的 /app 目录
+  #     - ./application.yml:/app/application.yml # 挂载外部配置文件到容器的 /app 目录
+  #   command: java -jar /app/blog.jar --spring.config.location=/app/application.yml
+  #   ports:
+  #     - "8082:8080" # 映射容器的 8080 端口到宿主机的 8082 端口
+  #   networks:
+  #     - mynetwork
+
+networks:
+  mynetwork: # 定义一个自定义网络以便两个服务可以互相通信
