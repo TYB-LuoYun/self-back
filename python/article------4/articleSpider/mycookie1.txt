@@ -1,0 +1,2 @@
+#LWP-Cookies-2.0
+Set-Cookie3: token="111111111111111111"; path="/"; domain="localhost.local"; path_spec; discard; version=0
